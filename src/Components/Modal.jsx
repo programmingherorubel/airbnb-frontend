@@ -1,19 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getBadRoom } from '../app/api/featchers/badroomSlice/badroomSlice'
 import { getPrice } from '../app/api/featchers/priceSlice/priceSlice'
+import { getBeds } from '../app/api/featchers/singleBedSlice/singleBedSlice'
 
 
 
 export default function Modal() {
     let [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const selector = useSelector((state)=> console.log(state))
-    
-    
-    
-       
+
+    const sngleBedsHandeler = (e)=>{
+        dispatch(getBeds(e))
+    }
+  
+
     const badroomHaneler = (e)=>{
         dispatch(getBadRoom(e))
     }
@@ -88,7 +90,16 @@ export default function Modal() {
                                             <button onClick={()=>badroomHaneler(4)} className='bg-gray-200 p-4 font-bold rounded-full '>4</button>
                                             <button onClick={()=>badroomHaneler(5)} className='bg-gray-200 p-4 font-bold rounded-full '>5</button>
                                         </div>
+                                        <h3 className='text-2xl py-4'>Beds</h3>
+                                        <div className='flex justify-between gap-2'>
+                                            <span onClick={()=>sngleBedsHandeler(1)} className='bg-gray-200 p-4 font-bold rounded-full '>1</span>
+                                            <span onClick={()=>sngleBedsHandeler(2)} className='bg-gray-200 p-4 font-bold rounded-full '>2</span>
+                                            <span onClick={()=>sngleBedsHandeler(3)} className='bg-gray-200 p-4 font-bold rounded-full '>3</span>
+                                            <span onClick={()=>sngleBedsHandeler(4)} className='bg-gray-200 p-4 font-bold rounded-full '>4</span>
+                                            <span onClick={()=>sngleBedsHandeler(5)} className='bg-gray-200 p-4 font-bold rounded-full '>5</span>
+                                        </div>
                                     </div>
+                                    
                                     {/* content */}
                                 </Dialog.Panel>
                             </Transition.Child>

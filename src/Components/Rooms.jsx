@@ -11,6 +11,8 @@ const Rooms = () => {
     const categoryData = useSelector((state) => state.category.category)
     const {badroom} = useSelector((state) => state.Badroom)
     const {price} = useSelector((state)=>state.price)
+    const {beds} = useSelector((state)=> state.beds)
+    
     let highValue
     const [inputValue,setInputValue]=useState('')
     
@@ -19,7 +21,8 @@ const allValue = {
     categoryData,
     price,
     inputValue,
-    badroom
+    badroom,
+    beds
 }
 
 
