@@ -67,6 +67,7 @@ export default function Modal() {
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     {/* content */}
+                                    <h4>Price Range </h4>
                                     <input
                                         onChange={(e) => sendeingData(e.target.value)}
                                         type="range"
