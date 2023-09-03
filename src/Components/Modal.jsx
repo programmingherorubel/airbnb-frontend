@@ -1,14 +1,23 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useGetRoomsQuery } from '../app/api/apiSlice'
+import { getPrice } from '../app/api/featchers/priceSlice/priceSlice'
 
 
-export default function Modal({highValue,lowestValue,userOnchenge,usrData}) {
+
+export default function Modal() {
     let [isOpen, setIsOpen] = useState(false)
-    const [minValue, setMinValue] = useState(lowestValue)
-    const [largestValue, setLargeValue] = useState(highValue)
+    const dispatch = useDispatch()
+    const {price} = useSelector((state)=>state.price)
+    const [userRangeValue,setUserRangeValue]= useState('')
+    
+       
     
     
-    
+  const sendeingData = (e)=>{
+    dispatch(getPrice(e));
+  }
 
     function closeModal() {
         setIsOpen(false)
@@ -18,7 +27,7 @@ export default function Modal({highValue,lowestValue,userOnchenge,usrData}) {
         setIsOpen(true)
     }
 
-    
+
     return (
         <>
             <div >
@@ -58,12 +67,14 @@ export default function Modal({highValue,lowestValue,userOnchenge,usrData}) {
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     {/* content */}
-                                    <h4 className='text-4xl'>Price Range</h4>
-                                    <div className='flex justify-between'>
-                                        <span>{usrData}</span>
-                                        <span>{highValue}</span>
-                                    </div>
-                                    <input onChange={userOnchenge} type="range" min={100} max={900} defaultValue="100" className="range range-success" />
+                                    <input
+                                        onChange={(e) => sendeingData(e.target.value)}
+                                        type="range"
+                                        min={100}
+                                        max={900}
+                                        defaultValue={100}
+                                        className="range range-primary"
+                                    />
                                     {/* content */}
                                 </Dialog.Panel>
                             </Transition.Child>

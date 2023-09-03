@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Slider from 'react-slick';
+import { useGetCategoryQuery } from '../app/api/apiSlice';
+import { getCetegory } from '../app/api/featchers/categorySlice/categorySlice';
 import CustomContainer from './CustomContainer';
+import Error from './Error';
+import Loading from './Loading';
 import Modal from './Modal';
 
 
-const Category = ({setSelectCategory,highValue,lowestValue,userOnchenge,usrData}) => {
-    const [categoryData,setCategoryData]=useState([])
+const Category = () => {
+    const dispatch = useDispatch()
+    const categoryData = useSelector((state)=> state.category.category)
+    const [selectCategory,setSelectCategory]=useState('')
+    const {isError,isLoading,data} = useGetCategoryQuery()
     
+    
+    const categoryHandeler = (info)=>{
+        dispatch(getCetegory(info))
+    }
+  
+    console.log(categoryData)
     var settings = {
         arrows: true,
         // centerMode: true,
@@ -43,28 +57,37 @@ const Category = ({setSelectCategory,highValue,lowestValue,userOnchenge,usrData}
             }
         ]
     };
-    useEffect(()=>{
-        fetch(`http://localhost:9000/category`)
-        .then(res => res.json())
-        .then(data => setCategoryData(data))
-    },[])
+   let content = null
 
+    if(isLoading){
+        content = <Loading/>
+    }
+    if(!isLoading && isError){
+        content = <Error error='thare was an Error'/>
+    }
+    if(!isLoading && !isError && data.length === 0){
+        content = <Error error='Data Not Found'/>
+    }
+
+    if(!isLoading && !isError && data.length >0){
+        content =  <div className='m-6 w-[85%]'>
+        <Slider {...settings}>
+            {
+                data?.map((item,index)=><div onClick={()=>categoryHandeler(item.label)} className='text-center text-gray-700' key={index}>
+                    <i className={item.icon}></i>
+                    <p><b>{item.label}</b></p>
+                </div>)
+            }
+        </Slider>
+    </div>
+    }
   
     return (
         <CustomContainer>
             <div className='flex justify-center items-center'>
-                <div className='m-6 w-[85%]'>
-                    <Slider {...settings}>
-                        {
-                            categoryData.map((item,index)=><div onClick={()=>setSelectCategory(item.label)} className='text-center text-gray-700' key={index}>
-                                <i className={item.icon}></i>
-                                <p><b>{item.label}</b></p>
-                            </div>)
-                        }
-                    </Slider>
-                </div>
+               {content}
                 <div className='w-[15%] mx-auto text-center '>
-                    <Modal usrData={usrData} userOnchenge={userOnchenge} lowestValue={lowestValue}highValue={highValue} />
+                    <Modal  />
                 </div>
             </div>
         </CustomContainer>
