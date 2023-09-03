@@ -11,12 +11,12 @@ const Room = ({item}) => {
             className=' absolute top-3 right-3'>
           </div>
         </div>
-        <div className='font-semibold text-lg'>Sidemen, Indonesia</div>
+        <div className='font-semibold text-lg'>{item.location}</div>
         <div className='font-light text-neutral-500'>
-          5 nights . June 19 - 26
+          {item.dateRange}
         </div>
         <div className='flex flex-row items-center gap-1'>
-          <div className='font-semibold'>$ 200</div>
+          <div className='font-semibold'>$ {item.price}</div>
           <div className='font-light'>night</div>
         </div>
       </div>

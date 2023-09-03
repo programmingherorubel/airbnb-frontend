@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetRoomsQuery } from '../app/api/apiSlice'
+import { getBadRoom } from '../app/api/featchers/badroomSlice/badroomSlice'
 import { getPrice } from '../app/api/featchers/priceSlice/priceSlice'
 
 
@@ -9,11 +9,14 @@ import { getPrice } from '../app/api/featchers/priceSlice/priceSlice'
 export default function Modal() {
     let [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
-    const {price} = useSelector((state)=>state.price)
-    const [userRangeValue,setUserRangeValue]= useState('')
+    const selector = useSelector((state)=> console.log(state))
+    
+    
     
        
-    
+    const badroomHaneler = (e)=>{
+        dispatch(getBadRoom(e))
+    }
     
   const sendeingData = (e)=>{
     dispatch(getPrice(e));
@@ -67,7 +70,7 @@ export default function Modal() {
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     {/* content */}
-                                    <h4>Price Range </h4>
+                                    <h2 className='text-2xl py-4'>Price Range </h2>
                                     <input
                                         onChange={(e) => sendeingData(e.target.value)}
                                         type="range"
@@ -76,6 +79,16 @@ export default function Modal() {
                                         defaultValue={100}
                                         className="range range-primary"
                                     />
+                                    <div>
+                                        <h3 className='text-2xl py-4'>Bedrooms</h3>
+                                        <div className='flex justify-between gap-2'>
+                                            <button onClick={()=>badroomHaneler(1)} className='bg-gray-200 p-4 font-bold rounded-full '>1</button>
+                                            <button onClick={()=>badroomHaneler(2)} className='bg-gray-200 p-4 font-bold rounded-full '>2</button>
+                                            <button onClick={()=>badroomHaneler(3)} className='bg-gray-200 p-4 font-bold rounded-full '>3</button>
+                                            <button onClick={()=>badroomHaneler(4)} className='bg-gray-200 p-4 font-bold rounded-full '>4</button>
+                                            <button onClick={()=>badroomHaneler(5)} className='bg-gray-200 p-4 font-bold rounded-full '>5</button>
+                                        </div>
+                                    </div>
                                     {/* content */}
                                 </Dialog.Panel>
                             </Transition.Child>

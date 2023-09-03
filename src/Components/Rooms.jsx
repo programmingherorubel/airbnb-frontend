@@ -9,6 +9,7 @@ import ExtraSearchBar from './ExtraSearchBar';
 
 const Rooms = () => {
     const categoryData = useSelector((state) => state.category.category)
+    const {badroom} = useSelector((state) => state.Badroom)
     const {price} = useSelector((state)=>state.price)
     let highValue
     const [inputValue,setInputValue]=useState('')
@@ -17,7 +18,8 @@ const Rooms = () => {
 const allValue = {
     categoryData,
     price,
-    inputValue
+    inputValue,
+    badroom
 }
 
 
