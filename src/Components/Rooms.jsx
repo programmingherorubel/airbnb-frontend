@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetRoomsQuery } from '../app/api/apiSlice';
 import CustomContainer from './CustomContainer';
 import Error from './Error';
 import Loading from './Loading';
 import Room from './Room';
+import ExtraSearchBar from './ExtraSearchBar';
 
 const Rooms = () => {
     const categoryData = useSelector((state) => state.category.category)
     const {price} = useSelector((state)=>state.price)
     let highValue
+    const [inputValue,setInputValue]=useState('')
+    
 
 const allValue = {
     categoryData,
     price,
-    
+    inputValue
 }
 
 
@@ -51,6 +54,7 @@ const { isError, isLoading, data } = useGetRoomsQuery(allValue)
       }
     return (
         <CustomContainer>
+          <ExtraSearchBar setInputValue={setInputValue}/>
             {content}
         </CustomContainer>
     );

@@ -10,8 +10,8 @@ export const apiSlice = createApi({
       query: () => 'category',
     }),
     getRooms: builder.query({
-      query: ({categoryData,price}) => {
-        return `rooms/?category=${categoryData}&price=${price}`; 
+      query: ({categoryData,price,inputValue}) => {
+        return `rooms/?category=${categoryData}&price=${price}&inputValue=${inputValue}`; 
       },
     }),
   }),

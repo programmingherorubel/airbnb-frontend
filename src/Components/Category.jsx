@@ -20,7 +20,7 @@ const Category = () => {
         dispatch(getCetegory(info))
     }
   
-    console.log(categoryData)
+   
     var settings = {
         arrows: true,
         // centerMode: true,
